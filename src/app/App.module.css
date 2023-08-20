@@ -1,4 +1,4 @@
-.app-wrapper {
+.appWrapper {
   width: 1920px;
   margin: 0 auto;
   display: grid;
@@ -9,6 +9,14 @@
   grid-template-columns: 2fr 10fr;
 }
 
+.appWrapperContent {
+  grid-area: c;
+  background-color: cornflowerblue;
+}
+
+.appWrapperContent img {
+  max-width: 100%;
+}
 
 
 

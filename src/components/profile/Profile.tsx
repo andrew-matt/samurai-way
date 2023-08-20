@@ -1,14 +1,12 @@
 import React from 'react';
-import content from 'assets/images/profile-background.jpg';
+import profileBackground from 'assets/images/profile/profile-background.jpg';
+import { MyPosts } from 'components/profile/my_posts/MyPosts';
 
-import style from './Profile.module.css';
-import MyPosts from 'components/profile/my_posts/MyPosts';
-
-const Profile = () => {
+export const Profile = () => {
   return (
-    <div className={style.content}>
+    <div>
       <div>
-        <img src={content} alt="content"/>
+        <img src={profileBackground} alt="profileBackground"/>
       </div>
       <div>
         ava + description
@@ -17,5 +15,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

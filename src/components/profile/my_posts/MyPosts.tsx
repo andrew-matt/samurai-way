@@ -1,7 +1,7 @@
 import React from 'react';
-import Post from 'components/profile/my_posts/post/Post';
+import { Post } from 'components/profile/my_posts/post/Post';
 
-const MyPosts = () => {
+export const MyPosts = () => {
   return (
     <div>
       My posts
@@ -16,5 +16,3 @@ const MyPosts = () => {
     </div>
   );
 };
-
-export default MyPosts;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import userIcon from 'assets/images/stromtrooper.jpg';
+import userIcon from 'assets/images/profile/stromtrooper.jpg';
 import style from './Post.module.css';
 
 type PostPropsType = {
@@ -7,7 +7,7 @@ type PostPropsType = {
   likesAmount: number
 }
 
-const Post: FC<PostPropsType> = (props) => {
+export const Post: FC<PostPropsType> = (props) => {
   return (
     <div className={style.item}>
       <img src={userIcon} alt="userIcon"/>
@@ -18,5 +18,3 @@ const Post: FC<PostPropsType> = (props) => {
     </div>
   );
 };
-
-export default Post;
