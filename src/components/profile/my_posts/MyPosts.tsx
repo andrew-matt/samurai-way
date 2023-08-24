@@ -1,9 +1,19 @@
 import React from 'react';
 import { Post } from 'components/profile/my_posts/post/Post';
 
-import style from './MyPosts.module.css'
+import style from './MyPosts.module.css';
 
 export const MyPosts = () => {
+
+  let postsData = [
+    {id: '1', post: 'Hello there!', likesAmount: 4},
+    {id: '2', post: 'Nice to meet you:)', likesAmount: 6},
+  ];
+
+  const posts = postsData.map(post => (
+    <Post message={post.post} likesAmount={post.likesAmount}/>
+  ));
+
   return (
     <div className={style.postsBlock}>
       <h3>My posts</h3>
@@ -15,10 +25,7 @@ export const MyPosts = () => {
           <button>Add post</button>
         </div>
       </div>
-      <div className={style.posts}>
-        <Post message={'Hello there!'} likesAmount={4}/>
-        <Post message={'Nice to meet you:)'} likesAmount={6}/>
-      </div>
+      <div className={style.posts}>{posts}</div>
     </div>
   );
 };

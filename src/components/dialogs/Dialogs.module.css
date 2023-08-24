@@ -11,6 +11,19 @@
 
 }
 
+.dialog a {
+  text-decoration: none;
+  color: black;
+}
+
+.dialog a:hover {
+  color: red;
+}
+
+.dialog a.active {
+  color: red;
+}
+
 .messages {
   padding: 10px;
 }
