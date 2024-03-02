@@ -1,31 +1,42 @@
-import React from 'react';
-import { Post } from 'components/profile/my_posts/post/Post';
-
+import React, { ChangeEvent } from 'react';
 import style from './MyPosts.module.css';
+import { Post } from 'components/profile/my_posts/post/Post';
+import { PostType } from 'redux/state';
 
-export const MyPosts = () => {
+type MyPostsPropsType = {
+  posts: PostType[]
+  addPost: () => void
+  updateNewPostText: (newPostText: string) => void
+  newPostText: string
+}
 
-  let postsData = [
-    {id: '1', post: 'Hello there!', likesAmount: 4},
-    {id: '2', post: 'Nice to meet you:)', likesAmount: 6},
-  ];
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+  const postsElements = props.posts.map(post => <Post key={post.id} id={post.id}
+                                                      message={post.message}
+                                                      likesCount={post.likesCount}/>);
 
-  const posts = postsData.map(post => (
-    <Post message={post.post} likesAmount={post.likesAmount}/>
-  ));
+  const addPost = () => {
+    props.addPost();
+  };
+
+  const onPostChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostText(event.currentTarget.value);
+  };
 
   return (
     <div className={style.postsBlock}>
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea></textarea>
+          <textarea onChange={onPostChange} value={props.newPostText}/>
         </div>
         <div>
-          <button>Add post</button>
+          <button onClick={addPost}>Add post</button>
         </div>
       </div>
-      <div className={style.posts}>{posts}</div>
+      <div className={style.posts}>
+        {postsElements}
+      </div>
     </div>
   );
 };

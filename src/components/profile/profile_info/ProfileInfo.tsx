@@ -1,15 +1,14 @@
 import React from 'react';
-import profileBackground from 'assets/images/profile/profile-background.jpg';
-
-import style from './ProfileInfo.module.css'
+import style from './ProfileInfo.module.css';
+import backgroundImage from 'assets/images/profile-background.jpg';
 
 export const ProfileInfo = () => {
   return (
     <div>
       <div>
-        <img src={profileBackground} alt="profileBackground"/>
+        <img className={style.background} src={backgroundImage} alt=""/>
       </div>
-      <div className={style.descriptionBlock}>
+      <div className={style.description}>
         ava + description
       </div>
     </div>

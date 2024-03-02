@@ -1,18 +1,14 @@
 .nav {
-  grid-area: n;
+  grid-area: navbar;
   background-color: burlywood;
   padding: 20px;
 }
 
 .item a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 
-.item a:hover {
-  color: red;
-}
-
-.item a.active {
-  color: red;
+.item a.activeLink {
+  color: gold;
 }

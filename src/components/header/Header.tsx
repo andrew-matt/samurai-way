@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from 'assets/icons/logo/logo.png';
-
-import style from './Header.module.css';
+import logo from 'assets/icons/logo.png';
+import style from './Header.module.css'
 
 export const Header = () => {
   return (
     <header className={style.header}>
-      <img src={logo} alt="logo"/>
+      <img src={logo} alt=""/>
     </header>
   );
 };

@@ -1,9 +1,20 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from 'app/App';
+import 'index.css';
+import React from 'react';
+import { store } from 'redux/state';
 
-ReactDOM.render(
-    <App />,
-  document.getElementById('root')
-);
+const render = () => {
+  ReactDOM.render(
+    <BrowserRouter>
+      <App state={store.getState()} addPost={store.addPost.bind(store)}
+           updateNewPostText={store.updateNewPostText.bind(store)}/>
+    </BrowserRouter>,
+    document.getElementById('root'),
+  );
+};
+
+render();
+
+store.subscribe(render);

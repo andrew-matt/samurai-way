@@ -1,20 +1,18 @@
-import React, { FC } from 'react';
-import userIcon from 'assets/images/profile/stromtrooper.jpg';
+import React from 'react';
 import style from './Post.module.css';
+import user from 'assets/icons/stromtrooper.jpg';
+import { PostType } from 'redux/state';
 
-type PostPropsType = {
-  message: string
-  likesAmount: number
-}
-
-export const Post: FC<PostPropsType> = (props) => {
+export const Post: React.FC<PostType> = (props) => {
   return (
     <div className={style.item}>
-      <img src={userIcon} alt="userIcon"/>
-      {props.message}
+      <img src={user} alt=""/>
+        {props.message}
       <div>
-        <span>{props.likesAmount} likes</span>
+        <span>likes</span>
+        <span> {props.likesCount}</span>
       </div>
     </div>
   );
 };
+

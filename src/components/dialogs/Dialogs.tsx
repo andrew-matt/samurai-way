@@ -1,60 +1,38 @@
-import React, { FC } from 'react';
-
+import React from 'react';
 import style from './Dialogs.module.css';
-import { NavLink } from 'react-router-dom';
+import { DialogItem } from 'components/dialogs/dialog_item/DialogItem';
+import { Message } from 'components/dialogs/message/Message';
+import { DialogsPageType } from 'redux/state';
 
-type DialogItemPropsType = {
-  id: string
-  name: string
+type DialogsPropsType = {
+  dialogsPage: DialogsPageType
 }
 
-type MessagePropsType = {
-  message: string
-}
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
+  const dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>)
+  const messagesElements = props.dialogsPage.messages.map(message => <Message key={message.id} id={message.id} message={message.message}/>)
 
-const DialogItem: FC<DialogItemPropsType> = (props) => {
-  let path = '/dialogs/' + props.id;
-  return (
-    <div className={style.dialog}>
-      <NavLink to={path} activeClassName={style.active}>{props.name}</NavLink>
-    </div>
-  );
-};
+  const newMessageElement = React.createRef<HTMLTextAreaElement>();
 
-const Message: FC<MessagePropsType> = (props) => {
-  return (
-    <div className={style.message}>{props.message}</div>
-  );
-};
-
-export const Dialogs = () => {
-
-  let dialogsData = [
-    {id: '1', name: 'John'},
-    {id: '2', name: 'Bob'},
-    {id: '3', name: 'Ann'},
-    {id: '4', name: 'Helen'},
-    {id: '5', name: 'Alice'},
-  ];
-
-  let messageData = [
-    {id: '1', message: 'Hi'},
-    {id: '2', message: 'Good day'},
-    {id: '3', message: 'Hello'},
-  ];
-
-  const dialogs = dialogsData.map(dialog => (
-    <DialogItem id={dialog.id} name={dialog.name}/>
-  ));
-
-  const messages = messageData.map(message => (
-    <Message message={message.message}/>
-  ));
+  const addMessage = () => {
+    const message = newMessageElement.current?.value;
+    alert(message)
+  }
 
   return (
     <div className={style.dialogs}>
-      <div className={style.dialogsItems}>{dialogs}</div>
-      <div className={style.messages}>{messages}</div>
+      <div className={style.dialogsItems}>
+        {dialogsElements}
+      </div>
+      <div className={style.messages}>
+        {messagesElements}
+        <div>
+          <textarea ref={newMessageElement}></textarea>
+        </div>
+        <div>
+          <button onClick={addMessage}>Add message</button>
+        </div>
+      </div>
     </div>
   );
 };

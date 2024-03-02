@@ -1,22 +1,20 @@
 .appWrapper {
-  width: 1920px;
   margin: 0 auto;
   display: grid;
+  width: 1200px;
   grid-template-areas:
-    "h h"
-    "n c";
+    'header header'
+    'navbar content';
+
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
 }
 
 .appWrapperContent {
-  grid-area: c;
+  grid-area: content;
   background-color: cornflowerblue;
 }
 
-.appWrapperContent img {
-  max-width: 100%;
-}
 
 
 
