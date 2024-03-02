@@ -29,21 +29,10 @@ export type RootStateType = {
   dialogsPage: DialogsPageType
 }
 
-type AddPostActionType = {
-  type: 'ADD-POST'
-}
-
-type UpdateNewPostTextActionType = {
-  type: 'UPDATE-NEW-POST-TEXT'
-  newPostText: string
-}
-
-export type ActionTypes = AddPostActionType | UpdateNewPostTextActionType;
-
 type StoreType = {
   _state: RootStateType
   getState: () => RootStateType
-  dispatch: (action: AddPostActionType | UpdateNewPostTextActionType) => void
+  dispatch: (action: ActionTypes) => void
   _callSubscriber: () => void
   subscribe: (observer: () => void) => void
 }
@@ -101,6 +90,21 @@ export const store: StoreType = {
   subscribe(observer: () => void) {
     this._callSubscriber = observer;
   },
+};
+
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>;
+
+export const addPostActionCreator = () => {
+  return {
+    type: 'ADD-POST',
+  } as const;
+};
+
+export const updateNewPostTextActionCreator = (newPostText: string) => {
+  return {
+    type: 'UPDATE-NEW-POST-TEXT',
+    newPostText: newPostText
+  } as const;
 };
 
 // @ts-ignore
