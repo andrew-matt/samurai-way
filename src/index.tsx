@@ -8,8 +8,7 @@ import { store } from 'redux/state';
 const render = () => {
   ReactDOM.render(
     <BrowserRouter>
-      <App state={store.getState()} addPost={store.addPost.bind(store)}
-           updateNewPostText={store.updateNewPostText.bind(store)}/>
+      <App state={store.getState()} dispatch={store.dispatch.bind(store)}/>
     </BrowserRouter>,
     document.getElementById('root'),
   );
