@@ -21,12 +21,12 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                                                       message={post.message}
                                                       likesCount={post.likesCount}/>);
 
-  const addPost = () => {
-    props.dispatch(addPostActionCreator());
-  };
-
   const onPostChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     props.dispatch(updateNewPostTextActionCreator(event.currentTarget.value));
+  };
+
+  const addPost = () => {
+    props.dispatch(addPostActionCreator());
   };
 
   return (
