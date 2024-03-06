@@ -1,4 +1,4 @@
-import { ActionTypes, PostType, ProfilePageType } from 'redux/state';
+import { ActionTypes, PostType, ProfilePageType } from 'redux/redux-store';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -6,7 +6,19 @@ const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 export type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof updateNewPostTextActionCreator>
 
-export const profileReducer = (state: ProfilePageType, action: ActionTypes) => {
+const initialState = {
+  posts: [
+    {id: '1', message: 'May the force be with you', likesCount: 15},
+    {
+      id: '2',
+      message: 'These aren\'t the droids you\'re looking for',
+      likesCount: 20,
+    },
+  ],
+  newPostText: '',
+};
+
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes) => {
   switch (action.type) {
     case ADD_POST:
       const newPost: PostType = {

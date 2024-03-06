@@ -1,34 +1,34 @@
 import { profileReducer, ProfileReducerActionTypes } from 'redux/profile-reducer';
 import { dialogsReducer, DialogsReducerActionTypes } from 'redux/dialogs-reducer';
 
-export type PostType = {
+type PostType = {
   id: string
   message: string
   likesCount: number
 }
 
-export type DialogType = {
+type DialogType = {
   id: string
   name: string
 }
 
-export type MessageType = {
+type MessageType = {
   id: string
   message: string
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
   posts: PostType[]
   newPostText: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
   dialogs: DialogType[]
   messages: MessageType[]
   newMessageBody: string
 }
 
-export type RootStateType = {
+type RootStateType = {
   profilePage: ProfilePageType
   dialogsPage: DialogsPageType
 }
@@ -41,10 +41,10 @@ type StoreType = {
   subscribe: (observer: () => void) => void
 }
 
-export type ActionTypes = ProfileReducerActionTypes
+type ActionTypes = ProfileReducerActionTypes
   | DialogsReducerActionTypes
 
-export const store: StoreType = {
+const store: StoreType = {
   _state: {
     profilePage: {
       posts: [
@@ -90,5 +90,3 @@ export const store: StoreType = {
   },
 };
 
-// @ts-ignore
-window.store = store;
