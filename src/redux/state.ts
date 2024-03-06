@@ -1,3 +1,6 @@
+import { profileReducer, ProfileReducerActionTypes } from 'redux/profile-reducer';
+import { dialogsReducer, DialogsReducerActionTypes } from 'redux/dialogs-reducer';
+
 export type PostType = {
   id: string
   message: string
@@ -38,10 +41,8 @@ type StoreType = {
   subscribe: (observer: () => void) => void
 }
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-const SEND_MESSAGE = 'SEND-MESSAGE';
+export type ActionTypes = ProfileReducerActionTypes
+  | DialogsReducerActionTypes
 
 export const store: StoreType = {
   _state: {
@@ -79,63 +80,14 @@ export const store: StoreType = {
     return this._state;
   },
   dispatch(action) {
-    if (action.type === ADD_POST) {
-      const newPost: PostType = {
-        id: '5',
-        message: this._state.profilePage.newPostText,
-        likesCount: 0,
-      };
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
 
-      this._state.profilePage.posts.push(newPost);
-      this._state.profilePage.newPostText = '';
-      this._callSubscriber();
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._state.profilePage.newPostText = action.newPostText;
-      this._callSubscriber();
-    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-      this._state.dialogsPage.newMessageBody = action.newMessageBody;
-      this._callSubscriber();
-    } else if (action.type === SEND_MESSAGE) {
-      const body = this._state.dialogsPage.newMessageBody;
-      this._state.dialogsPage.newMessageBody = '';
-      this._state.dialogsPage.messages.push({id: '6', message: body});
-      this._callSubscriber();
-    }
+    this._callSubscriber();
   },
   subscribe(observer: () => void) {
     this._callSubscriber = observer;
   },
-};
-
-export type ActionTypes = ReturnType<typeof addPostActionCreator>
-  | ReturnType<typeof updateNewPostTextActionCreator>
-  | ReturnType<typeof updateNewMessageBodyActionCreator>
-  | ReturnType<typeof sendMessageActionCreator>
-
-export const addPostActionCreator = () => {
-  return {
-    type: ADD_POST,
-  } as const;
-};
-
-export const updateNewPostTextActionCreator = (newPostText: string) => {
-  return {
-    type: UPDATE_NEW_POST_TEXT,
-    newPostText: newPostText,
-  } as const;
-};
-
-export const updateNewMessageBodyActionCreator = (newMessageBody: string) => {
-  return {
-    type: UPDATE_NEW_MESSAGE_BODY,
-    newMessageBody: newMessageBody,
-  } as const;
-};
-
-export const sendMessageActionCreator = () => {
-  return {
-    type: SEND_MESSAGE,
-  } as const;
 };
 
 // @ts-ignore

@@ -3,10 +3,12 @@ import style from './MyPosts.module.css';
 import { Post } from 'components/profile/my_posts/post/Post';
 import {
   ActionTypes,
-  addPostActionCreator,
   PostType,
-  updateNewPostTextActionCreator,
 } from 'redux/state';
+import {
+  addPostActionCreator,
+  updateNewPostTextActionCreator,
+} from 'redux/profile-reducer';
 
 type MyPostsPropsType = {
   posts: PostType[]
