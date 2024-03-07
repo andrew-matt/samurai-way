@@ -1,29 +1,34 @@
 import React from 'react';
-import { ActionTypes, PostType } from 'redux/redux-store';
 import {
   addPostActionCreator,
   updateNewPostTextActionCreator,
 } from 'redux/profile-reducer';
 import { MyPosts } from 'components/profile/my_posts/MyPosts';
+import { StoreContext } from 'StoreContext';
 
-type MyPostsPropsType = {
-  posts: PostType[]
-  newPostText: string
-  dispatch: (action: ActionTypes) => void
-}
+type MyPostsPropsType = {}
 
 
-export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
-  const onPostChange = (newPostText: string) => {
-    props.dispatch(updateNewPostTextActionCreator(newPostText));
-  };
-
-  const addPost = () => {
-    props.dispatch(addPostActionCreator());
-  };
-
+export const MyPostsContainer: React.FC<MyPostsPropsType> = () => {
   return (
-    <MyPosts posts={props.posts} newPostText={props.newPostText}
-             updateNewPostText={onPostChange} addPost={addPost}/>
+    <StoreContext.Consumer>
+      {
+        (store) => {
+          const onPostChange = (newPostText: string) => {
+            store.dispatch(updateNewPostTextActionCreator(newPostText));
+          };
+
+          const addPost = () => {
+            store.dispatch(addPostActionCreator());
+          };
+
+
+          return <MyPosts posts={store.getState().profilePage.posts}
+                   newPostText={store.getState().profilePage.newPostText}
+                   updateNewPostText={onPostChange}
+                   addPost={addPost}/>
+        }
+      }
+    </StoreContext.Consumer>
   );
 };

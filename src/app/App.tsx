@@ -7,26 +7,20 @@ import { Route } from 'react-router-dom';
 import { News } from 'components/news/News';
 import { Music } from 'components/music/Music';
 import { Settings } from 'components/settings/Settings';
-import { ActionTypes, RootStateType } from 'redux/redux-store';
 import { DialogsContainer } from 'components/dialogs/DialogsContainer';
 
-type AppPropsType = {
-  state: RootStateType
-  dispatch: (action: ActionTypes) => void
-}
+type AppPropsType = {}
 
-export const App: React.FC<AppPropsType> = (props) => {
+export const App: React.FC<AppPropsType> = () => {
   return (
     <div className={style.appWrapper}>
       <Header/>
       <Navbar/>
       <div className={style.appWrapperContent}>
         <Route path="/dialogs"
-               render={() => <DialogsContainer dialogsPage={props.state.dialogsPage}
-                                               dispatch={props.dispatch}/>}/>
+               render={() => <DialogsContainer/>}/>
         <Route path="/profile"
-               render={() => <Profile profilePage={props.state.profilePage}
-                                      dispatch={props.dispatch}/>}/>
+               render={() => <Profile/>}/>
         <Route path="/news" render={() => <News/>}/>
         <Route path="/music" render={() => <Music/>}/>
         <Route path="/settings" render={() => <Settings/>}/>

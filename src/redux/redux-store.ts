@@ -34,6 +34,14 @@ export type RootStateType = {
   dialogsPage: DialogsPageType
 }
 
+export type StoreType = {
+  _state: RootStateType
+  getState: () => RootStateType
+  dispatch: (action: ActionTypes) => void
+  _callSubscriber: () => void
+  subscribe: (observer: () => void) => void
+}
+
 export type ActionTypes = ProfileReducerActionTypes
   | DialogsReducerActionTypes
 
@@ -42,7 +50,7 @@ const reducers = combineReducers({
   dialogsPage: dialogsReducer,
 });
 
-export const store = createStore(reducers);
+export const store: StoreType = createStore(reducers);
 
 // @ts-ignore
 window.store = store;

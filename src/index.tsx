@@ -4,11 +4,14 @@ import { App } from 'app/App';
 import 'index.css';
 import React from 'react';
 import { store } from 'redux/redux-store';
+import { Provider } from 'StoreContext';
 
 const render = () => {
   ReactDOM.render(
     <BrowserRouter>
-      <App state={store.getState()} dispatch={store.dispatch.bind(store)}/>
+      <Provider store={store}>
+        <App/>
+      </Provider>
     </BrowserRouter>,
     document.getElementById('root'),
   );
