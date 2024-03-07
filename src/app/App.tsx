@@ -3,12 +3,12 @@ import style from './App.module.css';
 import { Header } from 'components/header/Header';
 import { Navbar } from 'components/navbar/Navbar';
 import { Profile } from 'components/profile/Profile';
-import { Dialogs } from 'components/dialogs/Dialogs';
 import { Route } from 'react-router-dom';
 import { News } from 'components/news/News';
 import { Music } from 'components/music/Music';
 import { Settings } from 'components/settings/Settings';
 import { ActionTypes, RootStateType } from 'redux/redux-store';
+import { DialogsContainer } from 'components/dialogs/DialogsContainer';
 
 type AppPropsType = {
   state: RootStateType
@@ -22,8 +22,8 @@ export const App: React.FC<AppPropsType> = (props) => {
       <Navbar/>
       <div className={style.appWrapperContent}>
         <Route path="/dialogs"
-               render={() => <Dialogs dialogsPage={props.state.dialogsPage}
-                                      dispatch={props.dispatch}/>}/>
+               render={() => <DialogsContainer dialogsPage={props.state.dialogsPage}
+                                               dispatch={props.dispatch}/>}/>
         <Route path="/profile"
                render={() => <Profile profilePage={props.state.profilePage}
                                       dispatch={props.dispatch}/>}/>
