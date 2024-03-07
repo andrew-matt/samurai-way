@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './DialogItem.module.css';
 import { NavLink } from 'react-router-dom';
-import { DialogType } from 'redux/redux-store';
+import { DialogType } from 'redux/dialogs-reducer';
 
 export const DialogItem: React.FC<DialogType> = (props) => {
   return (

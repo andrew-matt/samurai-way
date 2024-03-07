@@ -2,55 +2,17 @@ import { combineReducers, createStore } from 'redux';
 import { profileReducer, ProfileReducerActionTypes } from 'redux/profile-reducer';
 import { dialogsReducer, DialogsReducerActionTypes } from 'redux/dialogs-reducer';
 
-export type PostType = {
-  id: string
-  message: string
-  likesCount: number
-}
+export type AppStateType = ReturnType<typeof rootReducer>
 
-export type DialogType = {
-  id: string
-  name: string
-}
-
-export type MessageType = {
-  id: string
-  message: string
-}
-
-export type ProfilePageType = {
-  posts: PostType[]
-  newPostText: string
-}
-
-export type DialogsPageType = {
-  dialogs: DialogType[]
-  messages: MessageType[]
-  newMessageBody: string
-}
-
-export type RootStateType = {
-  profilePage: ProfilePageType
-  dialogsPage: DialogsPageType
-}
-
-export type StoreType = {
-  _state: RootStateType
-  getState: () => RootStateType
-  dispatch: (action: ActionTypes) => void
-  _callSubscriber: () => void
-  subscribe: (observer: () => void) => void
-}
-
-export type ActionTypes = ProfileReducerActionTypes
-  | DialogsReducerActionTypes
-
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
 });
 
-export const store: StoreType = createStore(reducers);
+export const store = createStore(rootReducer);
 
 // @ts-ignore
 window.store = store;
+
+export type ActionTypes = ProfileReducerActionTypes
+  | DialogsReducerActionTypes

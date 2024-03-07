@@ -1,10 +1,13 @@
-import { ActionTypes, PostType, ProfilePageType } from 'redux/redux-store';
+import { ActionTypes } from 'redux/redux-store';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
-export type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
-  | ReturnType<typeof updateNewPostTextActionCreator>
+export type PostType = {
+  id: string
+  message: string
+  likesCount: number
+}
 
 const initialState = {
   posts: [
@@ -14,11 +17,13 @@ const initialState = {
       message: 'These aren\'t the droids you\'re looking for',
       likesCount: 20,
     },
-  ],
+  ] as PostType[],
   newPostText: '',
 };
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes) => {
+type InitialStateType = typeof initialState
+
+export const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
       const newPost: PostType = {
@@ -37,6 +42,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
       return state;
   }
 };
+
+export type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
+  | ReturnType<typeof updateNewPostTextActionCreator>
 
 export const addPostActionCreator = () => {
   return {
