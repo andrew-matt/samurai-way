@@ -5,12 +5,10 @@ import userAvatar from 'assets/avatars/user.png';
 import axios from 'axios';
 
 export class Users extends React.Component<UsersPropsType> {
-
-  constructor(props: UsersPropsType) {
-    super(props);
-
-    axios.get('https://social-network.samuraijs.com/api/1.0//users').then(response => {
+  componentDidMount() {
+    axios.get(`https://social-network.samuraijs.com/api/1.0//users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
       this.props.setUsers(response.data.items);
+      this.props.setTotalUsersCount(response.data.totalCount);
     });
   }
 
@@ -22,7 +20,37 @@ export class Users extends React.Component<UsersPropsType> {
     this.props.unfollow(userID);
   };
 
+  onPageNumberClick = (currentPage: number) => {
+    if (this.props.currentPage !== currentPage) {
+      this.props.setCurrentPage(currentPage);
+      axios.get(`https://social-network.samuraijs.com/api/1.0//users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
+        this.props.setUsers(response.data.items);
+      });
+    }
+  };
+
   render() {
+
+    const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+    const pages = [];
+
+    const currentPage = this.props.currentPage;
+    const lastPage = pagesCount;
+    const displayedPagesCount = 10;
+
+    if (currentPage < displayedPagesCount) {
+      for (let i = 1; i <= displayedPagesCount; i++) {
+        pages.push(i);
+      }
+    } else if (pagesCount - currentPage < displayedPagesCount / 2) {
+      for (let i = currentPage - displayedPagesCount / 2; i <= lastPage; i++) {
+        pages.push(i);
+      }
+    } else {
+      for (let i = currentPage - displayedPagesCount / 2; i <= currentPage + displayedPagesCount / 2; i++) {
+        pages.push(i);
+      }
+    }
 
     return (
       <div className={style.userContainer}>
@@ -53,6 +81,38 @@ export class Users extends React.Component<UsersPropsType> {
             );
           })
         }
+        <div className={style.pageNumbersWrapper}>
+          {
+            this.props.currentPage > 1 &&
+            <>
+              <div className={style.pageNumber}
+                   onClick={() => this.onPageNumberClick(1)}>First
+              </div>
+              <div className={style.pageNumber}
+                   onClick={() => this.onPageNumberClick(currentPage - 1)}>Previous
+              </div>
+            </>
+          }
+          {
+            pages.map(page => {
+              return <span
+                key={page}
+                className={currentPage === page ? style.currentPage : style.pageNumber}
+                onClick={() => this.onPageNumberClick(page)}>{page}</span>;
+            })
+          }
+          {
+            this.props.currentPage < lastPage &&
+            <>
+              <div className={style.pageNumber}
+                   onClick={() => this.onPageNumberClick(currentPage + 1)}>Next
+              </div>
+              <div className={style.pageNumber}
+                   onClick={() => this.onPageNumberClick(lastPage)}>Last
+              </div>
+            </>
+          }
+        </div>
       </div>
     );
   }

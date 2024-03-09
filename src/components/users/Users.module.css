@@ -2,6 +2,29 @@
   padding: 15px;
 }
 
+.previousPage {
+}
+
+.pageNumbersWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageNumber {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pageNumber:hover {
+  color: orange;
+}
+
+.currentPage {
+  margin: 0 5px;
+  font-weight: bold;
+}
+
 .userBlock {
   display: flex;
   margin-bottom: 15px;
