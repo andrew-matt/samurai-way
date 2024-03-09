@@ -1,59 +1,21 @@
 import React from 'react';
 import style from './Users.module.css';
 import { UsersPropsType } from 'components/users/UsersContainer';
-import photo from 'assets/avatars/user.png';
+import userAvatar from 'assets/avatars/user.png';
+import axios from 'axios';
 
 export const Users: React.FC<UsersPropsType> = (props) => {
   if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: '1',
-        photo: photo,
-        followed: false,
-        fullName: 'John',
-        status: 'Hell yeah!',
-        location: {country: 'United States', city: 'Boston'},
-      },
-      {
-        id: '2',
-        photo: photo,
-        followed: false,
-        fullName: 'Helen',
-        status: 'Dear old days, I miss you',
-        location: {country: 'Japan', city: 'Tokyo'},
-      },
-      {
-        id: '3',
-        photo: photo,
-        followed: true,
-        fullName: 'Bob',
-        status: 'Life has no Ctrl + Z',
-        location: {country: 'Mexico', city: 'Mexico City'},
-      },
-      {
-        id: '4',
-        photo: photo,
-        followed: true,
-        fullName: 'Ann',
-        status: 'War never changes',
-        location: {country: 'Russia', city: 'Moscow'},
-      },
-      {
-        id: '5',
-        photo: photo,
-        followed: false,
-        fullName: 'Noah',
-        status: 'Small steps every day',
-        location: {country: 'United Kingdom', city: 'London'},
-      },
-    ]);
+    axios.get('https://social-network.samuraijs.com/api/1.0//users').then(response => {
+      props.setUsers(response.data.items);
+    })
   }
 
-  const onFollowButtonClick = (userID: string) => {
+  const onFollowButtonClick = (userID: number) => {
     props.follow(userID);
   };
 
-  const onUnfollowButtonClick = (userID: string) => {
+  const onUnfollowButtonClick = (userID: number) => {
     props.unfollow(userID);
   };
 
@@ -65,7 +27,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
             <div key={user.id} className={style.userBlock}>
               <div className={style.userPhotoWrapper}>
                 <div>
-                  <img src={user.photo} alt={'avatar'}/>
+                  <img src={user.photos.large !== null ? user.photos.large : userAvatar} alt={'avatar'}/>
                 </div>
                 {
                   user.followed
@@ -77,12 +39,8 @@ export const Users: React.FC<UsersPropsType> = (props) => {
               </div>
               <div className={style.userInfo}>
                 <div className={style.userName}>
-                  <div>{user.fullName}</div>
+                  <div>{user.name}</div>
                   <div>{user.status}</div>
-                </div>
-                <div className={style.userLocation}>
-                  <div>{user.location.country}</div>
-                  <div>{user.location.city}</div>
                 </div>
               </div>
             </div>

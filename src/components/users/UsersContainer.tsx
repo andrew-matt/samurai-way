@@ -9,8 +9,8 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToProps = {
-  follow: (userID: string) => void
-  unfollow: (userID: string) => void
+  follow: (userID: number) => void
+  unfollow: (userID: number) => void
   setUsers: (users: UserType[]) => void
 }
 
