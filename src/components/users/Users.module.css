@@ -1,0 +1,55 @@
+.userContainer {
+  padding: 15px;
+}
+
+.userBlock {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.userPhotoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.userPhotoWrapper img {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.followButton {
+  width: 80%;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.followButton:hover {
+  background-color: aqua;
+}
+
+.userInfo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 15px;
+}
+
+.userName {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.userLocation {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
