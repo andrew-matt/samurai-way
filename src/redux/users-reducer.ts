@@ -3,6 +3,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 
 export type UserType = {
   name: string
@@ -20,6 +21,7 @@ const initialState = {
   pageSize: 5,
   totalUsersCount: 0,
   currentPage: 1,
+  isFetching: false
 };
 
 export type InitialStateType = typeof initialState
@@ -33,7 +35,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
           if (user.id === action.userID) {
             return {
               ...user,
-              followed: !user.followed,
+              followed: true,
             };
           }
           return user;
@@ -47,7 +49,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
           if (user.id === action.userID) {
             return {
               ...user,
-              followed: !user.followed,
+              followed: false,
             };
           }
           return user;
@@ -63,6 +65,9 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
     case SET_TOTAL_USERS_COUNT: {
       return {...state, totalUsersCount: action.totalUsersCount};
     }
+    case TOGGLE_IS_FETCHING: {
+      return {...state, isFetching: action.isFetching};
+    }
     default:
       return state;
   }
@@ -73,6 +78,7 @@ export type UsersReducerActionTypes = ReturnType<typeof followAC>
   | ReturnType<typeof setUsersAC>
   | ReturnType<typeof setCurrentPageAC>
   | ReturnType<typeof setTotalUsersCountAC>
+  | ReturnType<typeof toggleIsFetchingAC>
 
 export const followAC = (userID: number) => {
   return {
@@ -106,5 +112,12 @@ export const setTotalUsersCountAC = (totalUsersCount: number) => {
   return {
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount,
+  } as const;
+};
+
+export const toggleIsFetchingAC = (isFetching: boolean) => {
+  return {
+    type: TOGGLE_IS_FETCHING,
+    isFetching,
   } as const;
 };
