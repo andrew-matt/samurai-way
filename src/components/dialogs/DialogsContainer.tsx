@@ -6,7 +6,7 @@ import {
 import { Dialogs } from 'components/dialogs/Dialogs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { AppStateType } from 'redux/redux-store';
+import { AppStateType } from 'redux/store';
 
 type MapStateToPropsType = {
   dialogsPage: InitialStateType

@@ -73,7 +73,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
   }
 };
 
-export type UsersReducerActionTypes = ReturnType<typeof follow>
+type UsersReducerActionTypes = ReturnType<typeof follow>
   | ReturnType<typeof unfollow>
   | ReturnType<typeof setUsers>
   | ReturnType<typeof setCurrentPage>

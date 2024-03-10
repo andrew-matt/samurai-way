@@ -4,7 +4,7 @@ import {
 } from 'redux/profile-reducer';
 import { MyPosts } from 'components/profile/my_posts/MyPosts';
 import { connect } from 'react-redux';
-import { AppStateType } from 'redux/redux-store';
+import { AppStateType } from 'redux/store';
 import { Dispatch } from 'redux';
 
 type MapStateToPropsType = {
