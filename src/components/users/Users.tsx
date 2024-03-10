@@ -2,6 +2,7 @@ import React from 'react';
 import style from './Users.module.css';
 import userAvatar from 'assets/avatars/user.png';
 import { UserType } from 'redux/users-reducer';
+import { NavLink } from 'react-router-dom';
 
 type UsersPropsType = {
   users: UserType[]
@@ -42,10 +43,12 @@ export const Users: React.FC<UsersPropsType> = (props) => {
           return (
             <div key={user.id} className={style.userBlock}>
               <div className={style.userPhotoWrapper}>
-                <div>
-                  <img src={user.photos.large !== null ? user.photos.large : userAvatar}
-                       alt={'avatar'}/>
-                </div>
+                <NavLink to={'/profile/' + user.id}>
+                  <div>
+                    <img src={user.photos.large !== null ? user.photos.large : userAvatar}
+                         alt={'avatar'}/>
+                  </div>
+                </NavLink>
                 {
                   user.followed
                     ? <button className={style.followButton}
@@ -98,4 +101,5 @@ export const Users: React.FC<UsersPropsType> = (props) => {
       </div>
     </div>
   );
-};
+}
+  ;
