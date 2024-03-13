@@ -3,7 +3,7 @@ import style from './Users.module.css';
 import userAvatar from 'assets/avatars/user.png';
 import { UserType } from 'redux/users-reducer';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { usersAPI } from 'api/api';
 
 type UsersPropsType = {
   users: UserType[]
@@ -54,18 +54,18 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                     user.followed
                       ? <button className={style.followButton}
                                 onClick={() => {
-                                  axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {withCredentials: true})
-                                    .then(response => {
-                                      if (response.data.resultCode === 0) {
+                                  usersAPI.unfollow(user.id)
+                                    .then(data => {
+                                      if (data.resultCode === 0) {
                                         props.unfollow(user.id);
                                       }
                                     });
                                 }}>Unfollow</button>
                       : <button className={style.followButton}
                                 onClick={() => {
-                                  axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {withCredentials: true})
-                                    .then(response => {
-                                      if (response.data.resultCode === 0) {
+                                  usersAPI.follow(user.id)
+                                    .then(data => {
+                                      if (data.resultCode === 0) {
                                         props.follow(user.id);
                                       }
                                     });
