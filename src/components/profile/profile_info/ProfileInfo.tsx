@@ -1,28 +1,29 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
-import backgroundImage from 'assets/images/profile-background.jpg';
-import { ProfileType } from 'redux/profile-reducer';
+import {ProfileType} from 'redux/profile-reducer';
 import user from 'assets/avatars/user.png';
-import { Preloader } from 'components/common/preloader/Preloader';
+import {Preloader} from 'components/common/preloader/Preloader';
+import {ProfileStatus} from "./profile_status/ProfileStatus";
 
 type ProfileInfoPropsType = {
-  profile: null | ProfileType
+    profile: null | ProfileType
 }
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
-  if (!props.profile) {
-    return <Preloader/>;
-  }
+    if (!props.profile) {
+        return <Preloader/>;
+    }
 
-  return (
-    <div>
-      <div>
-        <img className={style.background} src={backgroundImage} alt="background"/>
-      </div>
-      <div className={style.description}>
-        <img src={props.profile.photos.large ? props.profile.photos.large : user}
-             alt={'avatar'}/>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            {/*<div>*/}
+            {/*  <img className={style.background} src={backgroundImage} alt="background"/>*/}
+            {/*</div>*/}
+            <div className={style.description}>
+                <img src={props.profile.photos.large ? props.profile.photos.large : user}
+                     alt={'avatar'}/>
+                <ProfileStatus status={'What a fine weather is is!'}/>
+            </div>
+        </div>
+    );
 };
