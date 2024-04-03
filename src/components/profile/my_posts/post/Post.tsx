@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Post.module.css';
-import user from 'assets/icons/stromtrooper.jpg';
+import user from 'assets/icons/stormtrooper.jpg';
 import { PostType } from 'redux/profile-reducer';
 
 export const Post: React.FC<PostType> = (props) => {

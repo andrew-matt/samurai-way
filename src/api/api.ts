@@ -19,7 +19,22 @@ export const usersAPI = {
       .then(response => response.data);
   },
   getProfile(userID: string) {
-    return instance.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
+    console.warn('Obsolete method. Please use profileAPI object.');
+    return profileAPI.getProfile(userID);
+  },
+};
+
+export const profileAPI = {
+  getProfile(userID: string) {
+    return instance.get(`profile/${userID}`)
+      .then(response => response.data);
+  },
+  getStatus(userID: string) {
+    return instance.get(`profile/status/${userID}`)
+      .then(response => response.data);
+  },
+  updateStatus(status: string) {
+    return instance.put(`profile/status`, {status: status})
       .then(response => response.data);
   },
 };

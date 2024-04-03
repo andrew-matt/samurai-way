@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux';
-import { usersAPI } from 'api/api';
+import { profileAPI, usersAPI } from 'api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_STATUS = 'SET-STATUS';
 
 export type PostType = {
   id: string
@@ -43,6 +44,7 @@ const initialState = {
   ] as PostType[],
   newPostText: '',
   profile: null as null | ProfileType,
+  status: '',
 };
 
 type InitialStateType = typeof initialState
@@ -74,6 +76,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         profile: action.profile,
       };
     }
+    case SET_STATUS: {
+      return {
+        ...state,
+        status: action.status,
+      };
+    }
     default:
       return state;
   }
@@ -82,6 +90,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
 type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof updateNewPostTextActionCreator>
   | ReturnType<typeof setUserProfile>
+  | ReturnType<typeof setStatus>
 
 export const addPostActionCreator = () => {
   return {
@@ -103,10 +112,35 @@ const setUserProfile = (profile: ProfileType) => {
   } as const;
 };
 
+const setStatus = (status: string) => {
+  return {
+    type: SET_STATUS,
+    status,
+  } as const;
+};
+
 export const getUserProfile = (userID: string) => {
   return (dispatch: Dispatch) => {
     usersAPI.getProfile(userID).then(data => {
       dispatch(setUserProfile(data));
     });
-  }
+  };
+};
+
+export const getStatus = (userID: string) => {
+  return (dispatch: Dispatch) => {
+    profileAPI.getStatus(userID).then(data => {
+      dispatch(setStatus(data));
+    });
+  };
+};
+
+export const updateStatus = (status: string) => {
+  return (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setStatus(status));
+      }
+    });
+  };
 };
