@@ -2,7 +2,6 @@ import { Dispatch } from 'redux';
 import { profileAPI, usersAPI } from 'api/api';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_STATUS = 'SET-STATUS';
 
@@ -42,7 +41,6 @@ const initialState = {
       likesCount: 20,
     },
   ] as PostType[],
-  newPostText: '',
   profile: null as null | ProfileType,
   status: '',
 };
@@ -54,20 +52,13 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
     case ADD_POST: {
       const newPost: PostType = {
         id: '5',
-        message: state.newPostText,
+        message: action.newPostText,
         likesCount: 0,
       };
 
       return {
         ...state,
         posts: [...state.posts, newPost],
-        newPostText: '',
-      };
-    }
-    case UPDATE_NEW_POST_TEXT: {
-      return {
-        ...state,
-        newPostText: action.newPostText,
       };
     }
     case SET_USER_PROFILE: {
@@ -87,20 +78,15 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
   }
 };
 
+// actions
+
 type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
-  | ReturnType<typeof updateNewPostTextActionCreator>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>
 
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (newPostText: string) => {
   return {
     type: ADD_POST,
-  } as const;
-};
-
-export const updateNewPostTextActionCreator = (newPostText: string) => {
-  return {
-    type: UPDATE_NEW_POST_TEXT,
     newPostText,
   } as const;
 };
@@ -118,6 +104,8 @@ const setStatus = (status: string) => {
     status,
   } as const;
 };
+
+// thunks
 
 export const getUserProfile = (userID: string) => {
   return (dispatch: Dispatch) => {
