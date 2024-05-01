@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
 import { authAPI } from 'api/api';
+import { AppThunk } from 'redux/store';
 
 const SET_USER_DATA = 'SET-USER-DATA';
 
@@ -12,13 +12,12 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: AuthReducerActionTypes): InitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: AuthReducerActionsType): InitialStateType => {
   switch (action.type) {
     case SET_USER_DATA: {
       return {
         ...state,
-        ...action.data,
-        isAuth: true,
+        ...action.payload,
       };
     }
     default:
@@ -26,20 +25,38 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
   }
 };
 
-type AuthReducerActionTypes = ReturnType<typeof setAuthUserData>
+export type AuthReducerActionsType = ReturnType<typeof setAuthUserData>
 
-const setAuthUserData = (userID: number, email: string, login: string) => {
+// actions
+const setAuthUserData = (userID: number | null, email: string | null, login: string | null, isAuth: boolean) => {
   return {
     type: SET_USER_DATA,
-    data: {userID, email, login},
+    payload: {userID, email, login, isAuth},
   } as const;
 };
 
-export const getAuthUserData = () => (dispatch: Dispatch) => {
+// thunks
+export const getAuthUserData = (): AppThunk => (dispatch) => {
   authAPI.authMe().then(data => {
     if (data.resultCode === 0) {
       const {id, email, login} = data.data;
-      dispatch(setAuthUserData(id, email, login));
+      dispatch(setAuthUserData(id, email, login, true));
+    }
+  });
+};
+
+export const login = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+  authAPI.login(email, password, rememberMe).then(data => {
+    if (data.resultCode === 0) {
+      dispatch(getAuthUserData());
+    }
+  });
+};
+
+export const logout = (): AppThunk => (dispatch) => {
+  authAPI.logout().then(data => {
+    if (data.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false));
     }
   });
 };

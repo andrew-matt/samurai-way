@@ -31,7 +31,7 @@ const initialState = {
 
 export type InitialStateType = typeof initialState
 
-export const usersReducer = (state: InitialStateType = initialState, action: UsersReducerActionTypes): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: UsersReducerActionsType): InitialStateType => {
   switch (action.type) {
     case FOLLOW: {
       return {
@@ -86,7 +86,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
   }
 };
 
-type UsersReducerActionTypes = ReturnType<typeof followSuccess>
+export type UsersReducerActionsType = ReturnType<typeof followSuccess>
   | ReturnType<typeof unfollowSuccess>
   | ReturnType<typeof setUsers>
   | ReturnType<typeof setCurrentPage>
@@ -94,6 +94,8 @@ type UsersReducerActionTypes = ReturnType<typeof followSuccess>
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof toggleFollowingProgress>
 
+
+// actions
 const followSuccess = (userID: number) => {
   return {
     type: FOLLOW,
@@ -144,6 +146,8 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: number) => 
   } as const;
 };
 
+
+// thunks
 export const getUsers = (currentPage: number, pageSize: number) => {
   return (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true));

@@ -47,7 +47,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionTypes): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_POST: {
       const newPost: PostType = {
@@ -79,8 +79,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
 };
 
 // actions
-
-type ProfileReducerActionTypes = ReturnType<typeof addPostActionCreator>
+export type ProfileReducerActionsType = ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>
 
@@ -106,7 +105,6 @@ const setStatus = (status: string) => {
 };
 
 // thunks
-
 export const getUserProfile = (userID: string) => {
   return (dispatch: Dispatch) => {
     usersAPI.getProfile(userID).then(data => {
